@@ -13,9 +13,9 @@
 <body>
   <main>
     <p id="score">0</p>
-    <p id="timer">3.00</p>
-    <p id="prompt">type enter</p>
-    <p id="typedWord">press enter to begin</p>
+    <p id="timer">10.00</p>
+    <p id="prompt">select the input field below, then press enter to begin</p>
+    <input type="text" id="wordInput" placeholder="type words here" onkeydown="if(event.key === 'Enter') { checkWord(); }"></input>    </form>
   </main>
 </body>
 
