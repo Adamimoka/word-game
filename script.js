@@ -1,21 +1,21 @@
 const wordList = new Set();
 const commonWordList = new Set();
 
-fetch('/static/words_alpha.txt')
+fetch('/words/words_alpha.txt')
     .then(response => response.text())
     .then(text => {
         const words = text.split('\n');
         words.forEach(word => wordList.add(word.trim()));
     })
     .catch(error => console.error('Error loading word list:', error));
-fetch('/static/extra_words.txt')
+fetch('/words/extra_words.txt')
     .then(response => response.text())
     .then(text => {
         const words = text.split('\n');
         words.forEach(word => wordList.add(word.trim()));
     })
     .catch(error => console.error('Error loading word list:', error));
-fetch('/static/common_words.txt')
+fetch('/words/common_words.txt')
     .then(response => response.text())
     .then(text => {
         const words = text.split('\n');
