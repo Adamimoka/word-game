@@ -14,10 +14,10 @@
   <main>
     <p id="score">0</p>
     <p id="timer">10.00</p>
-    <p id="problem"></p>
-    <p id="prompt">select the input field below, then press enter to begin</p>
-    <input type="text" id="wordInput" placeholder="type words here" onkeydown="if(event.key === 'Enter') { checkWord(); }" autocomplete="off"></input>    </form>
-    <p id="gameOverText"></p>
+    <p id="problem" style="opacity: 0;">Problem will appear here</p>
+    <p id="prompt">prompt will appear here. You must type a word that includes the prompt</p>
+    <input type="text" id="wordInput" placeholder="type words here" maxlength="0" onkeydown="if(event.key === 'Enter') { checkWord(); }" autocomplete="off"></input>    </form>
+    <p id="gameOverText">Select the input field, then press Enter to begin</p>
   </main>
 </body>
 

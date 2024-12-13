@@ -1,5 +1,28 @@
-const wordList = new Set(['cat', 'dog', 'bird', 'fish', 'elephant', 'giraffe', 'zebra', 'lion', 'tiger', 'bear']); // testing for now, will open a massive file later
-const commonWordList = new Set(['this file should contain a smaller number of common words, maybe the top 1000 most common english words']);
+const wordList = new Set();
+const commonWordList = new Set();
+
+fetch('/words/words_alpha.txt')
+    .then(response => response.text())
+    .then(text => {
+        const words = text.split('\n');
+        words.forEach(word => wordList.add(word.trim()));
+    })
+    .catch(error => console.error('Error loading word list:', error));
+fetch('/words/extra_words.txt')
+    .then(response => response.text())
+    .then(text => {
+        const words = text.split('\n');
+        words.forEach(word => wordList.add(word.trim()));
+    })
+    .catch(error => console.error('Error loading word list:', error));
+fetch('/words/common_words.txt')
+    .then(response => response.text())
+    .then(text => {
+        const words = text.split('\n');
+        words.forEach(word => commonWordList.add(word.trim()));
+    })
+    .catch(error => console.error('Error loading word list:', error));
+
 const usedWords = new Set([]);
 
 let PromptList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
@@ -25,6 +48,9 @@ setInterval(function() {
             gameOver();
         }
         problemOpacity = Math.max(problemOpacity - 0.02, 0);
+        if (problemMessage == '') {
+            problemMessage = '-';
+        }
         document.getElementById('problem').innerText = problemMessage;
         document.getElementById('problem').style.opacity = problemOpacity;
         document.getElementById('problem').style.color = problemColor;
@@ -42,21 +68,28 @@ function checkWord() {
 
     if (!wordList.has(typedWord)) { // Not a real word
         problemMessage = `'${typedWord}' is not a word!`;
-        problemOpacity = 1;
+        problemOpacity = 2;
         problemColor = 'red';
         return;
     }
 
     if (!typedWord.includes(wordPrompt)) { // Incorrect prompt
         problemMessage = `'${typedWord}' does not have the prompt '${wordPrompt}'!`;
-        problemOpacity = 1;
+        problemOpacity = 2;
         problemColor = 'red';
         return;
     }
 
+    if (typedWord.length < 3) { // Word too short
+        problemMessage = `'${typedWord}' is too short! (3 letters minimum)`;
+        problemOpacity = 2;
+        problemColor = 'red';
+        return;
+    }
+    
     if (usedWords.has(typedWord)) { // Word already used
         problemMessage = `'${typedWord}' has already been used!`;
-        problemOpacity = 1;
+        problemOpacity = 2;
         problemColor = 'red';
         return;
     }
@@ -84,7 +117,7 @@ function updateTime() {
 
 function startGame() {
     usedWords.clear();
-
+    
     wordPrompt = 'e';
 
     score = 0;
@@ -95,15 +128,37 @@ function startGame() {
     document.getElementById('timer').innerText = timer.toFixed(2);
     document.getElementById('prompt').innerText = wordPrompt;
     document.getElementById('wordInput').value = '';
-    
+    document.getElementById('gameOverText').innerText = '';
+
+    document.getElementById("wordInput").setAttribute('maxlength', '99'); 
+
     playing = true;
 }
 
 function gameOver() {
     playing = false;
+    document.getElementById("wordInput").blur();
+
     const potentialWords = (wordList.difference(commonWordList)).difference(usedWords);
     const potentialCommonWords = commonWordList.difference(usedWords);
     
+    for (let word of potentialWords) {
+        if (word.length < 3) {
+            potentialWords.delete(word);
+        }
+        if (!word.includes(wordPrompt)) {
+            potentialWords.delete(word);
+        }
+    }
+    for (let word of potentialCommonWords) {
+        if (word.length < 3) {
+            potentialCommonWords.delete(word);
+        }
+        if (!word.includes(wordPrompt)) {
+            potentialCommonWords.delete(word);
+        }
+    }
+
     function getRandomElements(arr, numElements) {
         const shuffled = [...arr].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, numElements);
@@ -114,6 +169,7 @@ function gameOver() {
     let randomFinalPotentialWords = randomPotentialCommonWords.concat(randomPotentialWords);
 
     document.getElementById('timer').innerText = 'Out of time';
-    document.getElementById('gameOverText').innerText = `Game Over.\nYour score was ${score}.\nYou got out on the prompt '${wordPrompt}'.\nYou could have used: ${randomFinalPotentialWords.join(', ')}.\nPress Enter to play again.`;
-}
+    document.getElementById('gameOverText').innerText = `Game Over.\nYour score was ${score}.\nYou got out on the prompt '${wordPrompt}'.\nYou could have used: ${randomFinalPotentialWords.join(', ')}.\nSelect the textbox and press Enter to play again.`;
 
+    document.getElementById("wordInput").setAttribute('maxlength', '0'); 
+}
