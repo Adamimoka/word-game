@@ -1,21 +1,21 @@
 const wordList = new Set();
 const commonWordList = new Set();
 
-fetch('/words/words_alpha.txt')
+fetch('https://raw.githubusercontent.com/Adamimoka/word-game/refs/heads/main/words/words_alpha.txt')
     .then(response => response.text())
     .then(text => {
         const words = text.split('\n');
         words.forEach(word => wordList.add(word.trim()));
     })
     .catch(error => console.error('Error loading word list:', error));
-fetch('/words/extra_words.txt')
+fetch('https://raw.githubusercontent.com/Adamimoka/word-game/refs/heads/main/words/extra_words.txt')
     .then(response => response.text())
     .then(text => {
         const words = text.split('\n');
         words.forEach(word => wordList.add(word.trim()));
     })
     .catch(error => console.error('Error loading word list:', error));
-fetch('/words/common_words.txt')
+fetch('https://raw.githubusercontent.com/Adamimoka/word-game/refs/heads/main/words/common_words.txt')
     .then(response => response.text())
     .then(text => {
         const words = text.split('\n');
