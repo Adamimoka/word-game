@@ -5,3 +5,5 @@ The original README file of dwyl's repository is included in this repository as 
 The 'common_words.txt' file is sourced from https://en.wikipedia.org/wiki/Wikipedia:Language_learning_centre/5000_most_common_words, with some modifications.
 
 The 'extra_words.txt' file is curated by myself, and contains additional words that are not present in the 'words_alpha.txt' file.
+
+The pormpts used in the function 'createPromptList()' are sourced from https://www3.nd.edu/~busiforc/handouts/cryptography/Letter%20Frequencies.html

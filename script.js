@@ -25,7 +25,8 @@ fetch('https://raw.githubusercontent.com/Adamimoka/word-game/refs/heads/main/wor
 
 const usedWords = new Set([]);
 
-let PromptList = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+let PromptList = []
+PromptList = generatePromptList();
 let wordPrompt = '';
 
 let problemMessage = '';
@@ -56,6 +57,20 @@ setInterval(function() {
         document.getElementById('problem').style.color = problemColor;
     }
 }, 20);
+
+function generatePromptList() {
+    let unRandomizedPromptList = [
+        ['e','t','a','o','i','n','s','h','r','d'],
+        ['th', 'he', 'in', 'er', 'an', 're', 'nd', 'on', 'en', 'at'],
+        ['k', 'x', 'j', 'q', 'z', 'it', 'is', 'hi', 'es', 'ng'],
+        ['ing', 'ent', 'ion', 'ter', 'ich', 'tion', 'ould', 'ight', 'ough', 'ment']];
+    let PromptList;
+    PromptList = getRandomElements(unRandomizedPromptList[0], 10);
+    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[1], 10));
+    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[2], 10));
+    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[3], 10));
+    return PromptList;
+}   
 
 function checkWord() {
     if (!playing) {
@@ -106,13 +121,12 @@ function scorePoint() {
     document.getElementById('timer').innerText = timer.toFixed(2);
     document.getElementById('wordInput').value = '';
 
-    let promptIndex = Math.floor(Math.random() * PromptList.length);
-    wordPrompt = PromptList[promptIndex];
+    wordPrompt = PromptList[score % PromptList.length];
     document.getElementById('prompt').innerText = wordPrompt;
 }
 
 function updateTime() {
-    timer = Math.max(10.5 * 0.94 ** score, 0.5);
+    timer = Math.max(Math.min(1000 ** (1 / (2 * score)) * 4.7, 10), 5);
 }
 
 function startGame() {
@@ -154,15 +168,10 @@ function gameOver() {
         if (word.length < 3) {
             potentialCommonWords.delete(word);
         }
-        if (!word.includes(wordPrompt)) {
+        if (!word.startsWith(wordPrompt)) {
             potentialCommonWords.delete(word);
         }
     }
-
-    function getRandomElements(arr, numElements) {
-        const shuffled = [...arr].sort(() => 0.5 - Math.random());
-        return shuffled.slice(0, numElements);
-      }
     
     let randomPotentialCommonWords = getRandomElements(potentialCommonWords, 3);
     let randomPotentialWords = getRandomElements(potentialWords, 3 - randomPotentialCommonWords.length);
@@ -172,4 +181,9 @@ function gameOver() {
     document.getElementById('gameOverText').innerText = `Game Over.\nYour score was ${score}.\nYou got out on the prompt '${wordPrompt}'.\nYou could have used: ${randomFinalPotentialWords.join(', ')}.\nSelect the textbox and press Enter to play again.`;
 
     document.getElementById("wordInput").setAttribute('maxlength', '0'); 
+}
+
+function getRandomElements(arr, numElements) {
+    const shuffled = [...arr].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, numElements);
 }
