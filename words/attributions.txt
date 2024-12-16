@@ -1,4 +1,4 @@
-The 'words_alpha.txt' file is sourced from GitHub user dwyl.
+The 'words_alpha.txt' file is sourced from GitHub org dwyl.
 Downloaded from https://github.com/dwyl/english-words.
 The original README file of dwyl's repository is included in this repository as 'words/original_readme.txt'.
 
