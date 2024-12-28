@@ -60,9 +60,9 @@ setInterval(function() {
 
 function generatePromptList() {
     let unRandomizedPromptList = [
-        ['e','t','a','o','i','n','s','h','r','d'],
+        ['t','a','o','i','n','s','h','r','d','l'],
         ['th', 'he', 'in', 'er', 'an', 're', 'nd', 'on', 'en', 'at'],
-        ['k', 'x', 'j', 'q', 'z', 'it', 'is', 'hi', 'es', 'ng'],
+        ['k', 'j', 'x', 'q', 'z', 'it', 'is', 'hi', 'es', 'ng'],
         ['ing', 'ent', 'ion', 'ter', 'ich', 'tion', 'ould', 'ight', 'ough', 'ment']];
     let PromptList;
     PromptList = getRandomElements(unRandomizedPromptList[0], 10);
@@ -126,7 +126,7 @@ function scorePoint() {
 }
 
 function updateTime() {
-    timer = Math.max(Math.min(1000 ** (1 / (2 * score)) * 4.7, 10), 5);
+    timer = Math.max(Math.min(11 * .97 ** score, 10), 2);
 }
 
 function startGame() {
