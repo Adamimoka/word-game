@@ -25,6 +25,8 @@ fetch('https://raw.githubusercontent.com/Adamimoka/word-game/refs/heads/main/wor
 
 const usedWords = new Set([]);
 
+let onHowToPlay = false;
+
 let PromptList = []
 PromptList = generatePromptList();
 let wordPrompt = '';
@@ -110,6 +112,26 @@ function checkWord() {
     }
 
     scorePoint();
+}
+
+function startGameButton() {
+    if (!playing) {
+        document.getElementById('PregameContainer').style.display = 'none';
+        document.getElementById('gameContainer').style.display = 'block';
+        startGame();
+        return;
+    }
+}
+
+function toggleHowToPlay() {
+    onHowToPlay = !onHowToPlay;
+    if (onHowToPlay) {
+        document.getElementById('PregameContainer').style.display = 'none';
+        document.getElementById('howToPlayContainer').style.display = 'block';
+    } else {
+        document.getElementById('PregameContainer').style.display = 'block';
+        document.getElementById('howToPlayContainer').style.display = 'none';
+    }
 }
 
 function scorePoint() {
