@@ -31,7 +31,7 @@ let PromptList = []
 PromptList = generatePromptList();
 let wordPrompt = '';
 
-let problemMessage = '';
+let problemMessage = '-';
 let problemOpacity = 0;
 let problemColor = 'red';
 
@@ -50,13 +50,15 @@ setInterval(function() {
         if (timer <= 0) {
             gameOver();
         }
-        problemOpacity = Math.max(problemOpacity - 0.02, 0);
-        if (problemMessage == '') {
-            problemMessage = '-';
+        else {
+            problemOpacity = Math.max(problemOpacity - 0.02, 0);
+            document.getElementById('problem').innerText = problemMessage;
+            document.getElementById('problem').style.opacity = problemOpacity;
+            document.getElementById('problem').style.color = problemColor;
+
+            const redValue = timer <= 3 ? Math.min(255, Math.floor((3 - timer) * 85)) : 0;
+            document.getElementById('timer').style.color = `rgb(${redValue}, 0, 0)`;
         }
-        document.getElementById('problem').innerText = problemMessage;
-        document.getElementById('problem').style.opacity = problemOpacity;
-        document.getElementById('problem').style.color = problemColor;
     }
 }, 20);
 
@@ -110,6 +112,8 @@ function checkWord() {
         problemColor = 'red';
         return;
     }
+
+    problemMessage = '-';
 
     scorePoint();
 }
@@ -203,6 +207,8 @@ function gameOver() {
     document.getElementById('gameOverText').innerText = `Game Over.\nYour score was ${score}.\nYou got out on the prompt '${wordPrompt}'.\nYou could have used: ${randomFinalPotentialWords.join(', ')}.\nSelect the textbox and press Enter to play again.`;
 
     document.getElementById("wordInput").setAttribute('maxlength', '0'); 
+
+    document.getElementById('problem').style.opacity = 1;
 }
 
 function getRandomElements(arr, numElements) {

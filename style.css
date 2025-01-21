@@ -3,7 +3,7 @@ body {
     color: #333;
     font-family: Arial, sans-serif;
     margin: 0;
-    height: 40vh;
+    height: 60vh;
 }
 
 main {
@@ -20,4 +20,43 @@ main {
     font-size: 1.5em;
     margin: 0;
     text-align: right;
+}
+
+#timer {
+    font-size: 1.5em;
+    margin: 0;
+    text-align: center;
+}
+
+#score {
+    font-size: 1.5em;
+    margin: 0;
+    text-align: center;
+}
+
+#prompt {
+    font-size: 1.5em;
+    margin: 0;
+    text-align: center;
+}
+
+#problem {
+    font-size: 1.5em;
+    margin: 0;
+    text-align: center;
+}
+
+#wordInput {
+    padding: 5px;
+    font-size: 1em;
+    margin: 0;
+    text-align: center;
+    border-radius: 20px;
+    border: 2px solid #888;
+}
+
+#gameOverText {
+    font-size: 1.2em;
+    margin: 0;
+    text-align: center;
 }
