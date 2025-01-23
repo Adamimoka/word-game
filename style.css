@@ -1,7 +1,8 @@
 body {
     background-color: #6f6f6f;
     color: #333;
-    font-family: Arial, sans-serif;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
     margin: 0;
     height: 60vh;
 }
@@ -14,12 +15,6 @@ main {
     max-width: 800px;
     box-shadow: 0 0 10px #00000080;
     height: 100%;
-}
-
-#highScore {
-    font-size: 1.5em;
-    margin: 0;
-    text-align: right;
 }
 
 #timer {
@@ -59,4 +54,9 @@ main {
     font-size: 1.2em;
     margin: 0;
     text-align: center;
+}
+
+input {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
 }

@@ -31,7 +31,7 @@ let PromptList = []
 PromptList = generatePromptList();
 let wordPrompt = '';
 
-let problemMessage = '-';
+let problemMessage = 'Out of Time!';
 let problemOpacity = 0;
 let problemColor = 'red';
 
@@ -56,8 +56,8 @@ setInterval(function() {
             document.getElementById('problem').style.opacity = problemOpacity;
             document.getElementById('problem').style.color = problemColor;
 
-            const redValue = timer <= 3 ? Math.min(255, Math.floor((3 - timer) * 85)) : 0;
-            document.getElementById('timer').style.color = `rgb(${redValue}, 0, 0)`;
+            const redValue = timer <= 2.4 ? Math.min(255, Math.floor((3 - timer) * 85)) : 51;
+            document.getElementById('timer').style.color = `rgb(${redValue}, 51, 51)`;
         }
     }
 }, 20);
@@ -69,10 +69,10 @@ function generatePromptList() {
         ['k', 'j', 'x', 'q', 'z', 'it', 'is', 'hi', 'es', 'ng'],
         ['ing', 'ent', 'ion', 'ter', 'ich', 'tion', 'ould', 'ight', 'ough', 'ment']];
     let PromptList;
-    PromptList = getRandomElements(unRandomizedPromptList[0], 10);
-    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[1], 10));
-    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[2], 10));
-    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[3], 10));
+    PromptList = getRandomElements(unRandomizedPromptList[0], 10, null);
+    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[1], 10, null));
+    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[2], 10, null));
+    PromptList = PromptList.concat(getRandomElements(unRandomizedPromptList[3], 10, null));
     return PromptList;
 }   
 
@@ -113,7 +113,7 @@ function checkWord() {
         return;
     }
 
-    problemMessage = '-';
+    problemMessage = 'Out of Time!';
 
     scorePoint();
 }
@@ -199,19 +199,23 @@ function gameOver() {
         }
     }
     
-    let randomPotentialCommonWords = getRandomElements(potentialCommonWords, 3);
-    let randomPotentialWords = getRandomElements(potentialWords, 3 - randomPotentialCommonWords.length);
+    let randomPotentialCommonWords = getRandomElements(potentialCommonWords, 5, ['<u>', '</u>']);
+    let randomPotentialWords = getRandomElements(potentialWords, 5 - randomPotentialCommonWords.length, ['<u>', '</u>']);
     let randomFinalPotentialWords = randomPotentialCommonWords.concat(randomPotentialWords);
 
-    document.getElementById('timer').innerText = 'Out of time';
-    document.getElementById('gameOverText').innerText = `Game Over.\nYour score was ${score}.\nYou got out on the prompt '${wordPrompt}'.\nYou could have used: ${randomFinalPotentialWords.join(', ')}.\nSelect the textbox and press Enter to play again.`;
+    document.getElementById('timer').innerText = '0';
+    document.getElementById('gameOverText').innerHTML = `<p>Game Over.<br><br>You could have used: ${randomFinalPotentialWords.join(', ')}.<br><br>Select the textbox and press Enter to play again.</p>`;
 
     document.getElementById("wordInput").setAttribute('maxlength', '0'); 
 
     document.getElementById('problem').style.opacity = 1;
 }
 
-function getRandomElements(arr, numElements) {
+function getRandomElements(arr, numElements, surroundWith) {
     const shuffled = [...arr].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, numElements);
+    elements = shuffled.slice(0, numElements);
+    if (surroundWith) {
+        elements = elements.map(element => surroundWith[0] + element + surroundWith[1]);
+    }
+    return elements;
 }
