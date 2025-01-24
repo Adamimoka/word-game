@@ -39,14 +39,21 @@ let score = 0;
 let timer = 10;
 let playing = false;
 
+let timerContext;
+
 window.onload = function() {
     document.getElementById("wordInput").focus();
+    timerContext = document.getElementById("timerCanvas").getContext("2d");
 }
 
 setInterval(function() {
     if (playing) {
         timer -= 0.02;
-        document.getElementById('timer').innerText = timer.toFixed(2);
+        document.getElementById('timerText').innerText = timer.toFixed(2);
+
+        timerContext.fillStyle = "green"; // Set the fill color to green
+        timerContext.fillRect(0, 0, 100, 100); // Fill the entire canvas with the green color
+
         if (timer <= 0) {
             gameOver();
         }
@@ -57,7 +64,7 @@ setInterval(function() {
             document.getElementById('problem').style.color = problemColor;
 
             const redValue = timer <= 2.4 ? Math.min(255, Math.floor((3 - timer) * 85)) : 51;
-            document.getElementById('timer').style.color = `rgb(${redValue}, 51, 51)`;
+            document.getElementById('timerText').style.color = `rgb(${redValue}, 51, 51)`;
         }
     }
 }, 20);
@@ -114,6 +121,7 @@ function checkWord() {
     }
 
     problemMessage = 'Out of Time!';
+    problemOpacity = 0;
 
     scorePoint();
 }
@@ -144,7 +152,7 @@ function scorePoint() {
     usedWords.add(typedWord);
 
     document.getElementById('score').innerText = score;
-    document.getElementById('timer').innerText = timer.toFixed(2);
+    document.getElementById('timerText').innerText = timer.toFixed(2);
     document.getElementById('wordInput').value = '';
 
     wordPrompt = PromptList[score % PromptList.length];
@@ -165,7 +173,7 @@ function startGame() {
     playing = true;
 
     document.getElementById('score').innerText = score;
-    document.getElementById('timer').innerText = timer.toFixed(2);
+    document.getElementById('timerText').innerText = timer.toFixed(2);
     document.getElementById('prompt').innerText = wordPrompt;
     document.getElementById('wordInput').value = '';
     document.getElementById('gameOverText').innerText = '';
@@ -203,7 +211,7 @@ function gameOver() {
     let randomPotentialWords = getRandomElements(potentialWords, 5 - randomPotentialCommonWords.length, ['<u>', '</u>']);
     let randomFinalPotentialWords = randomPotentialCommonWords.concat(randomPotentialWords);
 
-    document.getElementById('timer').innerText = '0';
+    document.getElementById('timerText').innerText = '0';
     document.getElementById('gameOverText').innerHTML = `<p>Game Over.<br><br>You could have used: ${randomFinalPotentialWords.join(', ')}.<br><br>Select the textbox and press Enter to play again.</p>`;
 
     document.getElementById("wordInput").setAttribute('maxlength', '0'); 
