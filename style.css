@@ -20,18 +20,10 @@ main {
     height: 100%;
 }
 
-#timer {
-    align-items: center;
-    position: absolute;
-    width: 100px;
-    height: 100px;
-}
-
-#timerText, #timerCanvas {
+#timerText {
     font-size: 1.5em;
     margin: 0;
     text-align: center;
-    position: absolute;
     width: 100%;
 }
 

@@ -36,6 +36,7 @@ let problemOpacity = 0;
 let problemColor = 'red';
 
 let score = 0;
+let wordCount = 0;
 let timer = 10;
 let playing = false;
 
@@ -43,16 +44,12 @@ let timerContext;
 
 window.onload = function() {
     document.getElementById("wordInput").focus();
-    timerContext = document.getElementById("timerCanvas").getContext("2d");
 }
 
 setInterval(function() {
     if (playing) {
         timer -= 0.02;
         document.getElementById('timerText').innerText = timer.toFixed(2);
-
-        timerContext.fillStyle = "green"; // Set the fill color to green
-        timerContext.fillRect(0, 0, 100, 100); // Fill the entire canvas with the green color
 
         if (timer <= 0) {
             gameOver();
@@ -147,7 +144,8 @@ function toggleHowToPlay() {
 }
 
 function scorePoint() {
-    score++;
+    score += typedWord.length;
+    wordCount++;
     updateTime();
     usedWords.add(typedWord);
 
@@ -155,12 +153,12 @@ function scorePoint() {
     document.getElementById('timerText').innerText = timer.toFixed(2);
     document.getElementById('wordInput').value = '';
 
-    wordPrompt = PromptList[score % PromptList.length];
+    wordPrompt = PromptList[wordCount % PromptList.length];
     document.getElementById('prompt').innerText = wordPrompt;
 }
 
 function updateTime() {
-    timer = Math.max(Math.min(11 * .97 ** score, 10), 2);
+    timer = Math.max(Math.min(11 * .97 ** wordCount, 10), 1);
 }
 
 function startGame() {
@@ -169,6 +167,7 @@ function startGame() {
     wordPrompt = 'e';
 
     score = 0;
+    wordCount = 0;
     timer = 10;
     playing = true;
 
@@ -211,7 +210,7 @@ function gameOver() {
     let randomPotentialWords = getRandomElements(potentialWords, 5 - randomPotentialCommonWords.length, ['<u>', '</u>']);
     let randomFinalPotentialWords = randomPotentialCommonWords.concat(randomPotentialWords);
 
-    document.getElementById('timerText').innerText = '0';
+    document.getElementById('timerText').innerText = '0.00';
     document.getElementById('gameOverText').innerHTML = `<p>Game Over.<br><br>You could have used: ${randomFinalPotentialWords.join(', ')}.<br><br>Select the textbox and press Enter to play again.</p>`;
 
     document.getElementById("wordInput").setAttribute('maxlength', '0'); 
