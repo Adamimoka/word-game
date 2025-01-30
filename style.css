@@ -20,6 +20,27 @@ main {
     height: 100%;
 }
 
+#howToPlayButton, #startButton, #closeHowToPlayButton {
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 1em;
+    margin: 0;
+    text-align: center;
+    border-radius: 20px;
+    border: 2px solid #888;
+}
+
+#howToPlayButton:hover, #startButton:hover, #closeHowToPlayButton:hover {
+    border-color: #000; 
+    transition: border-color 0.3s;
+}
+
+#howToPlayContainer {
+    width: 80%;
+}
+
+
 #timerText {
     font-size: 1.5em;
     margin: 0;

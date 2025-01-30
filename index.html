@@ -21,9 +21,17 @@
     </div>
     <div id="howToPlayContainer" style="display: none;">
       <h2>How to Play</h2>
-      <p>When the game starts, a prompt will appear. You must type a word that includes the prompt. For example, if the prompt is "cat", you could type "<b>cat</b>", "<b>cat</b>erpillar", or "appli<b>cat</b>ion".</p>
-      <p>Press Enter to submit your word. If the word is valid, you will earn points based on the length of the word, the timer will reset, and the prompt will change. If the word is invalid, the timer will not reset and you will have to quickly type a valid word.</p>
-      <p>You have limited time to type each word, sarting from 10 seconds and slowly reducing. If you run out of time, the game will end.</p>
+      <table id="howToPlayTable">
+        <tr>
+          <th> <h2>1</h2> Type a word that includes the given prompt. For example, if the prompt is "cat", you could type "<u>cat</u>", "<u>cat</u>erpillar", or "appli<u>cat</u>ion".</th>
+          <th> <h2>2</h2> Press Enter to submit. Valid words earn points and reset the timer. Invalid words will not reset the timer.</th>
+        </tr>
+        <tr>
+          <th> <h2>3</h2> The timer starts at 10 seconds and decreases over time. If you run out of time, the game ends.</th>
+          <th> <h2>4</h2> Score as many points as you can by typing valid words before the timer runs out. Good luck!</th>
+        </tr>
+      </table>
+      <br>
       <button id="closeHowToPlayButton" onclick="toggleHowToPlay()">Close</button>
     </div>
     <div id="gameContainer" style="display: none;">
@@ -35,7 +43,7 @@
       <br>
       <p id="prompt">prompt will appear here. You must type a word that includes the prompt</p>
       <p id="problem" style="opacity: 0;">Out of Time!</p>
-      <input type="text" id="wordInput" placeholder="type words here" maxlength="0" onkeydown="if(event.key === 'Enter') { checkWord(); }" autocomplete="off"></input>
+      <input type="text" id="wordInput" placeholder="type words here" maxlength="0" title="" onkeydown="if(event.key === 'Enter') { checkWord(); }" autocomplete="off"></input>
       <br><br>
       <p id="gameOverText"></p>
       </div>
