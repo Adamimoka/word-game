@@ -2,13 +2,10 @@ Word Game
 =========
 ## How to Play
 
-When the game starts, a prompt will appear. You must type a word that includes the prompt. For example, if the prompt is "cat", you could type "**cat**", "**cat**erpillar", or "appli**cat**ion".
-
-Press Enter to submit your word. If the word is valid, you will earn points based on the length of the word, the timer will reset, and the prompt will change. If the word is invalid, the timer will not reset and you will have to quickly type a valid word.
-
-You cannot reuse a word. Attempting to reuse a word will have it marked as invalid.
-
-You have limited time to type each word, starting from 10 seconds and slowly reducing. If you run out of time, the game will end.
+1. Type a word that includes the given prompt. For example, if the prompt is "cat", you could type "**cat**", "**cat**erpillar", or "appli**cat**ion".
+2. Press Enter to submit. Valid words earn points and reset the timer. Invalid words will not reset the timer.
+3. The timer starts at 10 seconds and decreases as the game continues. If you run out of time, the game ends.
+4. Score as many points as you can by typing valid words before the timer runs out. Good luck!
 
 ## Playing
 
