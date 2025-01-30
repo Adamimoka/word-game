@@ -40,6 +40,9 @@ main {
     width: 80%;
 }
 
+th {
+    max-width: 320px;
+}
 
 #timerText {
     font-size: 1.5em;

@@ -31,7 +31,7 @@ let PromptList = []
 PromptList = generatePromptList();
 let wordPrompt = '';
 
-let problemMessage = 'Out of Time!';
+let problemMessage = 'Out of Time! (try typing a word that contains \'e\', like \'elephant\')';
 let problemOpacity = 0;
 let problemColor = 'red';
 
@@ -158,7 +158,7 @@ function scorePoint() {
 }
 
 function updateTime() {
-    timer = Math.max(Math.min(11 * .97 ** wordCount, 10), 1);
+    timer = Math.max(Math.min(11 * .95 ** wordCount, 10), 1);
 }
 
 function startGame() {
